@@ -91,6 +91,7 @@ public class Sampler extends GUIApplication {
 				}
 			});
 			viewObjects.add(b);
+			viewObjects.add(new Dog());
 			
 			Graphic level = new Graphic(20, 300, "resources/mariolevel.jpg");
 			viewObjects.add(level);
