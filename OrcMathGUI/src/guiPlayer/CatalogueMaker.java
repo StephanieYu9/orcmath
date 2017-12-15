@@ -20,10 +20,14 @@ public class CatalogueMaker {
 		CatalogueMaker x = new CatalogueMaker();
 		System.out.println(x.getCSVContent());
 		Scanner n = new Scanner(System.in);
-
+		System.out.println("Enter a name.");
+		String name = n.nextLine();
+		System.out.println("Enter a color.");
+		String color = n.nextLine();
 	}
 
-	public void getUserinput() {
+	public void getUserInput() {
+		
 		
 	}
 	
