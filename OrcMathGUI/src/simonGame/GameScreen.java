@@ -22,8 +22,8 @@ public class GameScreen extends FullFunctionScreen {
 	private Button pinkButton;
 	private Button orangeButton;
 	
-	private boolean wonGame = false;
-	private boolean endGame = false;
+	
+	boolean firstUpdate = true;
 	
 	
 	int seqPos = 0;
@@ -37,7 +37,6 @@ public class GameScreen extends FullFunctionScreen {
 		currentRound = new String[3];
 		fillArrayWithMoves(currentRound);
 		
-		displayCurrentRound();
 	}
 	
 	public void buttonClick(String color) {
@@ -73,14 +72,130 @@ public class GameScreen extends FullFunctionScreen {
 		this.currentRound = nextRound;
 		this.seqPos = 0;
 		
+		
+		simonTurn();
+		
+	}
+	
+	public void simonTurn() {
+		Thread simonButtonSeq = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				for(int i = 0; i < currentRound.length; i++) {
+					toggleButton(currentRound[i]);
+					System.out.println("button " + i +" toggled");
+					
+				}
+			}
+		});
+	simonButtonSeq.start();
 	}
 	
 	public void displayCurrentRound() {
 		System.out.println("current round:");
 		for(String s : this.currentRound) {
-			System.out.println(s);
+			System.out.println(s);		
 		}
 		
+		
+		
+		
+	}
+	
+	public void toggleButton(String s) {
+		switch(s) {
+		case "red":
+			redButton.setBackground(Color.WHITE);
+			redButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			redButton.setBackground(Color.RED);
+			redButton.update();
+			break;
+			
+		case "yellow":
+			yellowButton.setBackground(Color.WHITE);
+			yellowButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			yellowButton.setBackground(Color.YELLOW);
+			yellowButton.update();
+			break;
+		case "green":
+			greenButton.setBackground(Color.WHITE);
+			greenButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			greenButton.setBackground(Color.GREEN);
+			greenButton.update();
+		
+			break;
+			
+		case "pink":
+			pinkButton.setBackground(Color.WHITE);
+			pinkButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			pinkButton.setBackground(Color.PINK);
+			pinkButton.update();
+			break;
+		case "orange":
+			orangeButton.setBackground(Color.WHITE);
+			orangeButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			orangeButton.setBackground(Color.ORANGE);
+			orangeButton.update();
+			break;
+			
+		case "cyan":
+			cyanButton.setBackground(Color.WHITE);
+			cyanButton.update();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			cyanButton.setBackground(Color.CYAN);
+			cyanButton.update();
+			break;
+	
+	}
 	}
 
 	public void fillArrayWithMoves(String[] arr) {
@@ -326,5 +441,21 @@ public class GameScreen extends FullFunctionScreen {
 		orangeButton.setCurve(50, 50);
 		viewObjects.add(orangeButton);
 	}
-
+	
+	
+	public void update() {
+		if(this.firstUpdate) {
+			System.out.println("firstUPdate");
+			this.firstUpdate = false;
+			this.displayCurrentRound();
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.simonTurn();
+		}
+		super.update();
+	}
 }
