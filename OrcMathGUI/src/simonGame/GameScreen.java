@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import guiTeacher.components.Button;
+import guiTeacher.components.TextBox;
 import guiTeacher.components.Action;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
@@ -23,6 +24,8 @@ public class GameScreen extends FullFunctionScreen {
 	private Button orangeButton;
 	
 	
+	private TextBox gameMetaText;
+	
 	private long sequenceSpeed = 1000;
 	
 	boolean firstUpdate = true;
@@ -35,11 +38,6 @@ public class GameScreen extends FullFunctionScreen {
 
 	public GameScreen(int width, int height) {
 		super(width, height);
-		
-		//initialize first round
-		
-		currentRound = new String[3];
-		fillArrayWithMoves(currentRound);
 		
 	}
 	
@@ -79,6 +77,11 @@ public class GameScreen extends FullFunctionScreen {
 		
 		
 		this.currentRound = nextRound;
+		
+		this.gameMetaText.remove(0, gameMetaText.getText().length());
+		this.gameMetaText.setText(getRoundText());
+		this.gameMetaText.update();
+
 		this.seqPos = 0;
 		
 		
@@ -266,7 +269,10 @@ public class GameScreen extends FullFunctionScreen {
 	}
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
+		//initialize first round
+		
+		currentRound = new String[3];
+		fillArrayWithMoves(currentRound);
 		
 		redButton = new Button(300, 100 ,50,50, "",Color.RED, new Action() {
 			
@@ -460,8 +466,18 @@ public class GameScreen extends FullFunctionScreen {
 		
 		orangeButton.setCurve(50, 50);
 		viewObjects.add(orangeButton);
+		
+		
+		
+		gameMetaText = new TextBox(300,350,175,60, getRoundText());
+		viewObjects.add(gameMetaText);
+		
 	}
 	
+	
+	public String getRoundText() {
+		return "Round " + (this.currentRound.length - 2) + "\nSequence Length: "+this.currentRound.length;
+	}
 	
 	public void update() {
 		if(this.firstUpdate) {
