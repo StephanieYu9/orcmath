@@ -23,7 +23,11 @@ public class GameScreen extends FullFunctionScreen {
 	private Button orangeButton;
 	
 	
+	private long sequenceSpeed = 1000;
+	
 	boolean firstUpdate = true;
+	
+	boolean simonsTurn = true;
 	
 	
 	int seqPos = 0;
@@ -40,18 +44,23 @@ public class GameScreen extends FullFunctionScreen {
 	}
 	
 	public void buttonClick(String color) {
-
-		if(this.currentRound[this.seqPos] == color) {
-			this.seqPos++;
-		}
-		else {
-			System.out.println("end game");
+		System.out.println("simonsTurn is " + simonsTurn);
+		if(simonsTurn == false) {
+			if(this.currentRound[this.seqPos] == color) {
+				this.seqPos++;
+			}
+			else {
+				System.out.println("end game");
+			}
+			
+			if(this.seqPos == this.currentRound.length) {
+				simonsTurn = true;
+				
+				setUpNextRound();
+				displayCurrentRound();
+			}
 		}
 		
-		if(this.seqPos == this.currentRound.length) {
-			setUpNextRound();
-			displayCurrentRound();
-		}
 
 	}
 	
@@ -75,6 +84,7 @@ public class GameScreen extends FullFunctionScreen {
 		
 		simonTurn();
 		
+		
 	}
 	
 	public void simonTurn() {
@@ -82,12 +92,19 @@ public class GameScreen extends FullFunctionScreen {
 			
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}//wait for previous moves to complete toggling buttons
 				
 				for(int i = 0; i < currentRound.length; i++) {
 					toggleButton(currentRound[i]);
 					System.out.println("button " + i +" toggled");
 					
 				}
+				simonsTurn = false;
 			}
 		});
 	simonButtonSeq.start();
@@ -111,7 +128,7 @@ public class GameScreen extends FullFunctionScreen {
 			redButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -126,7 +143,7 @@ public class GameScreen extends FullFunctionScreen {
 			yellowButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -140,7 +157,7 @@ public class GameScreen extends FullFunctionScreen {
 			greenButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -156,7 +173,7 @@ public class GameScreen extends FullFunctionScreen {
 			pinkButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -170,7 +187,7 @@ public class GameScreen extends FullFunctionScreen {
 			orangeButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -185,7 +202,7 @@ public class GameScreen extends FullFunctionScreen {
 			cyanButton.update();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sequenceSpeed);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
