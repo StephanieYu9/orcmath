@@ -25,6 +25,7 @@ public class GameScreen extends FullFunctionScreen {
 	
 	
 	private TextBox gameMetaText;
+	private TextBox turnDescription;
 	
 	private long sequenceSpeed = 1000;
 	
@@ -32,9 +33,12 @@ public class GameScreen extends FullFunctionScreen {
 	
 	boolean simonsTurn = true;
 	
+	boolean endOfGame = false;
 	
 	int seqPos = 0;
 	String[] currentRound;
+
+	
 
 	public GameScreen(int width, int height) {
 		super(width, height);
@@ -43,12 +47,20 @@ public class GameScreen extends FullFunctionScreen {
 	
 	public void buttonClick(String color) {
 		System.out.println("simonsTurn is " + simonsTurn);
-		if(simonsTurn == false) {
+		if(simonsTurn == false && !endOfGame) {
 			if(this.currentRound[this.seqPos] == color) {
 				this.seqPos++;
 			}
 			else {
 				System.out.println("end game");
+				endOfGame = true;
+				turnDescription.remove(0, turnDescription.getText().length());
+				if(currentRound.length == 3) {
+					turnDescription.setText("End of Game\nMax Sequence Reached: "+ 0);
+				}else {
+					turnDescription.setText("End of Game\nMax Sequence Reached: "+ (currentRound.length-1));
+				}
+				turnDescription.update();
 			}
 			
 			if(this.seqPos == this.currentRound.length) {
@@ -95,6 +107,12 @@ public class GameScreen extends FullFunctionScreen {
 			
 			@Override
 			public void run() {
+				
+				turnDescription.remove(0, turnDescription.getText().length());
+				turnDescription.setText("Simon's Turn!");
+				turnDescription.update();
+				
+				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -108,6 +126,10 @@ public class GameScreen extends FullFunctionScreen {
 					
 				}
 				simonsTurn = false;
+				
+				turnDescription.remove(0, turnDescription.getText().length());
+				turnDescription.setText("Your Turn!");
+				turnDescription.update();
 			}
 		});
 	simonButtonSeq.start();
@@ -471,6 +493,9 @@ public class GameScreen extends FullFunctionScreen {
 		
 		gameMetaText = new TextBox(300,350,175,60, getRoundText());
 		viewObjects.add(gameMetaText);
+		
+		turnDescription = new TextBox(50, 20, 250 ,60, "test");
+		viewObjects.add(turnDescription);
 		
 	}
 	
