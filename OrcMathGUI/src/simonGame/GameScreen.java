@@ -27,7 +27,7 @@ public class GameScreen extends FullFunctionScreen {
 	private TextBox gameMetaText;
 	private TextBox turnDescription;
 	
-	private long sequenceSpeed = 1000;
+	private long sequenceSpeed = 2000;
 	
 	boolean firstUpdate = true;
 	
@@ -143,8 +143,10 @@ public class GameScreen extends FullFunctionScreen {
 			}
 		});
 	simonButtonSeq.start();
-	if(sequenceSpeed >= 100) {
-		sequenceSpeed -= 50;
+	if(sequenceSpeed > 200) {
+		sequenceSpeed -= 200;
+	}else {
+		sequenceSpeed = 200; //minimum speed
 	}
 	}
 	
