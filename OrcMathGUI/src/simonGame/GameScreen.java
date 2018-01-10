@@ -108,6 +108,9 @@ public class GameScreen extends FullFunctionScreen {
 			}
 		});
 	simonButtonSeq.start();
+	if(sequenceSpeed >= 100) {
+		sequenceSpeed -= 50;
+	}
 	}
 	
 	public void displayCurrentRound() {
