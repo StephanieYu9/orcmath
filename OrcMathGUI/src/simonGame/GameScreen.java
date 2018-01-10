@@ -55,6 +55,7 @@ public class GameScreen extends FullFunctionScreen {
 				System.out.println("end game");
 				endOfGame = true;
 				turnDescription.remove(0, turnDescription.getText().length());
+				turnDescription.setAlpha(1);
 				if(currentRound.length == 3) {
 					turnDescription.setText("End of Game\nMax Sequence Reached: "+ 0);
 				}else {
@@ -111,6 +112,7 @@ public class GameScreen extends FullFunctionScreen {
 				turnDescription.remove(0, turnDescription.getText().length());
 				turnDescription.setText("Simon's Turn!");
 				turnDescription.update();
+				turnDescription.setAlpha(1);
 				
 				
 				try {
@@ -130,6 +132,14 @@ public class GameScreen extends FullFunctionScreen {
 				turnDescription.remove(0, turnDescription.getText().length());
 				turnDescription.setText("Your Turn!");
 				turnDescription.update();
+				
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				turnDescription.setAlpha(0);
 			}
 		});
 	simonButtonSeq.start();
@@ -494,7 +504,7 @@ public class GameScreen extends FullFunctionScreen {
 		gameMetaText = new TextBox(300,350,175,60, getRoundText());
 		viewObjects.add(gameMetaText);
 		
-		turnDescription = new TextBox(50, 20, 250 ,60, "test");
+		turnDescription = new TextBox(50, 20, 250 ,60, "");
 		viewObjects.add(turnDescription);
 		
 	}
